@@ -1,0 +1,55 @@
+package cu.suitetecsa.sdk.nauta.jsoupimpl;
+
+import org.jetbrains.annotations.NotNull;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
+import java.util.Map;
+
+/**
+ * Implementación de la factoría de conexiones utilizando Jsoup.
+ */
+public class ConnectionFactory {
+
+    private static final String USER_AGENT = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0";
+    private static final Map<String, String> headers = Map.of(
+            "Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            "Accept-Encoding", "gzip, deflate, br",
+            "Accept-Language", "es-MX,es;q=0.8,en-US;q=0.5,en;q=0.3"
+    );
+
+    /**
+     * Crea y devuelve una conexión utilizando la URL y los datos proporcionados.
+     *
+     * @param url         La URL a la que se va a establecer la conexión.
+     * @param cookies     Cookies para la solicitud (opcional).
+     * @return Objeto `Connection` que representa la conexión creada.
+     */
+    public static @NotNull Connection createConnection(String url, Map<String, String> cookies) {
+        return createConnection(url, null, cookies);
+    }
+
+    /**
+     * Crea y devuelve una conexión utilizando la URL y los datos proporcionados.
+     *
+     * @param url         La URL a la que se va a establecer la conexión.
+     * @param requestData Datos para la solicitud (opcional).
+     * @param cookies     Cookies para la solicitud (opcional).
+     * @return Objeto `Connection` que representa la conexión creada.
+     */
+    public static Connection createConnection(String url, Map<String, String> requestData, Map<String, String> cookies) {
+        Connection connection = Jsoup.connect(url);
+        connection.userAgent(USER_AGENT);
+        connection.headers(headers);
+
+        if (requestData != null) {
+            connection.data(requestData);
+        }
+
+        if (cookies != null && !cookies.isEmpty()) {
+            connection.cookies(cookies);
+        }
+
+        return connection;
+    }
+}
