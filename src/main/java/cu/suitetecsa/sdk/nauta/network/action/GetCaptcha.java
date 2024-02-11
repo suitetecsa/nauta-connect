@@ -41,17 +41,17 @@ public class GetCaptcha implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -61,12 +61,12 @@ public class GetCaptcha implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package cu.suitetecsa.sdk.nauta.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,7 +29,7 @@ public class HtmlErrorParser {
      * @param document The HTML document to parse.
      * @return The parsed error message, or null if no error message is found.
      */
-    public String parseError(Document document) {
+    public String parseError(@NotNull Document document) {
         Elements scripts = document.select("script[type='text/javascript']");
         Element lastScript = scripts.last();
 

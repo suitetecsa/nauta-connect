@@ -1,15 +1,20 @@
 package cu.suitetecsa.sdk.nauta.utils;
 
+import cu.suitetecsa.sdk.nauta.exception.NautaException;
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 public class ExceptionFactoryImpl<T extends Throwable> implements ExceptionFactory<T> {
+    private final Class<T> exceptionClass;
 
-    @SuppressWarnings("unchecked")
-    private Class<T> inferExceptionClass() {
-        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-        return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+    public ExceptionFactoryImpl(Class<T> exceptionClass) {
+        this.exceptionClass = exceptionClass;
     }
+
 
     /**
      * Crea una instancia de excepción utilizando la clase de excepción y el mensaje dado.
@@ -17,21 +22,29 @@ public class ExceptionFactoryImpl<T extends Throwable> implements ExceptionFacto
      * @param message El mensaje de la excepción.
      * @return Una instancia de excepción creada.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public T createException(String message) {
-        Class<T> exceptionClass = inferExceptionClass();
+        Constructor<T> constructor;
         try {
-            Constructor<T> constructor = exceptionClass.getDeclaredConstructor(String.class);
+            constructor = exceptionClass.getDeclaredConstructor(String.class);
             return constructor.newInstance(message);
-        } catch (Exception e) {
-            return (T) new Exception("Error al crear la excepción", e);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static class Builder<T extends Exception> {
+        private Class<T> exceptionClass;
+
+        public Builder<T> withExceptionClass(Class<T> exceptionClass) {
+            this.exceptionClass = exceptionClass;
+            return this;
+        }
+
+        @SuppressWarnings("unchecked")
         public ExceptionFactoryImpl<T> build() {
-            return new ExceptionFactoryImpl<>();
+            if (exceptionClass == null) exceptionClass = (Class<T>) NautaException.class;
+            return new ExceptionFactoryImpl<>(exceptionClass);
         }
     }
 }

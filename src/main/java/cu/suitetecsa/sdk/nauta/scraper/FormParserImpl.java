@@ -10,7 +10,7 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsoupFormParser implements FormParser {
+class FormParserImpl implements FormParser {
 
     private Document getHtml(@NotNull HttpResponse httpResponse) {
         return Jsoup.parse(httpResponse.getText());

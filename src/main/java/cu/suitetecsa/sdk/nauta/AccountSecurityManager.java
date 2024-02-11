@@ -11,18 +11,19 @@ import cu.suitetecsa.sdk.nauta.utils.ExceptionHandler;
 import cu.suitetecsa.sdk.nauta.utils.PortalManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class PortalSecurityManager {
-    private static PortalSecurityManager instance;
+public class AccountSecurityManager {
+    private static AccountSecurityManager instance;
     private PortalCommunicator communicator;
-    private String sessionId;
 
-    private PortalSecurityManager() {}
+    private AccountSecurityManager() {}
 
-    public static PortalSecurityManager getInstance(String sessionId) {
-        if (instance == null) instance = new PortalSecurityManager();
-        instance.sessionId = sessionId;
+    public static AccountSecurityManager getInstance(String sessionId) {
+        if (instance == null) {
+            instance = new AccountSecurityManager();
+            SessionImpl session = (SessionImpl) new Session.Builder().build();
+            session.cookies.put("session", sessionId);
+            instance.communicator = new PortalCommunicator.Builder().withSession(session).build();
+        }
         return instance;
     }
 
@@ -32,17 +33,10 @@ public class PortalSecurityManager {
     }
 
     private void changeAccountPassword(String oldPassword, String newPassword, Boolean isEmailAccount) throws NautaChangePasswordException, NautaException, LoadInfoException, NautaAttributeException {
-        if (communicator == null) {
-            SessionImpl session = new SessionImpl();
-            session.cookies.put("session", sessionId);
-            communicator = new PortalCommunicator.Builder().withSession(session).build();
-        }
-
         ErrorParser parser = new ErrorParser.Builder().whenPortalManager(PortalManager.USER).build();
 
         ChangePassword action = new ChangePassword(null, oldPassword, newPassword, isEmailAccount, HttpMethod.GET);
         ExceptionHandler<NautaChangePasswordException> changePasswordExceptionHandler = new ExceptionHandler<>(NautaChangePasswordException::new);
-        if (sessionId == null) throw changePasswordExceptionHandler.handleException("you are not logged in", List.of());
         String csrf = parseCsrfToken(action);
         communicator.performRequest(action.copyWithCsrfAndMethod(csrf, HttpMethod.POST), httpResponse -> {
             try {

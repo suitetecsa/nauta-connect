@@ -18,6 +18,10 @@ public class TopUpBalance implements Action {
         this.method = method;
     }
 
+    public TopUpBalance copyWithCsrfAndMethod(String csrf, HttpMethod method) {
+        return new TopUpBalance(csrf, this.rechargeCode, method);
+    }
+
     @Override
     public String getUrl() {
         return "/useraaa/recharge_account";
@@ -53,17 +57,17 @@ public class TopUpBalance implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -73,12 +77,12 @@ public class TopUpBalance implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return null;
     }
 }

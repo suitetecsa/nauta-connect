@@ -23,6 +23,10 @@ public class TransferFunds implements Action {
         this.method = method;
     }
 
+    public TransferFunds copyWithCsrfAndMethod(String csrf, HttpMethod method) {
+        return new TransferFunds(csrf, this.amount, this.password, this.destinationAccount, method);
+    }
+
     @Override
     public String getUrl() {
         return PortalManager.USER.getBaseUrl() + (destinationAccount != null ? "/useraaa/transfer_balance" : "/useraaa/transfer_nautahogarpaid");
@@ -62,17 +66,17 @@ public class TransferFunds implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -82,12 +86,12 @@ public class TransferFunds implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return null;
     }
 }

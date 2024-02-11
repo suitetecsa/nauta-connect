@@ -1,10 +1,9 @@
-package cu.suitetecsa.sdk.nauta.jsoupimpl;
+package cu.suitetecsa.sdk.nauta;
 
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
 import cu.suitetecsa.sdk.nauta.network.HttpResponse;
 import cu.suitetecsa.sdk.nauta.network.ResponseUtils;
-import cu.suitetecsa.sdk.nauta.network.Session;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Connection;
@@ -13,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsoupSession implements Session {
+class SessionImpl implements Session {
     public final Map<String, String> cookies = new HashMap<>();
 
     /**

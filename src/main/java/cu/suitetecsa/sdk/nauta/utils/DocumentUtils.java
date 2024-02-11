@@ -2,6 +2,7 @@ package cu.suitetecsa.sdk.nauta.utils;
 
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
 import cu.suitetecsa.sdk.nauta.exception.NotLoggedInException;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +15,7 @@ public class DocumentUtils {
         return new HtmlErrorParser().whenPortalManager(portalManager).parseError(html);
     }
 
-    private static List<String> parseErrors(String errorMessage) {
+    private static List<String> parseErrors(@NotNull String errorMessage) {
         if (errorMessage.startsWith("Se han detectado algunos errores.")) {
             Document errorsHtml = Jsoup.parse(errorMessage);
             Elements subMessages = errorsHtml.select("li[class='sub-message']");

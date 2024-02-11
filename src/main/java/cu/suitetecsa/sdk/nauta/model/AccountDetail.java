@@ -1,13 +1,25 @@
 package cu.suitetecsa.sdk.nauta.model;
 
-public record NautaUser(
+public record AccountDetail(
         String username,
-        long blockingDate,
-        long dateOfElimination,
+        long blockDate,
+        long deletionDate,
         String accountType,
         String serviceType,
-        float credit,
-        long time,
-        String mailAccount,
-        String offer
+        double availableBalance,
+        long accountTime,
+        String email,
+        String offer,
+        Double monthlyFee,
+        String downloadSpeed,
+        String uploadSpeed,
+        String phoneNumber,
+        String linkIdentifiers,
+        String linkStatus,
+        Long activationDate,
+        Long adslBlockDate,
+        Long adslDeletionDate,
+        Double feeBalance,
+        Double bonus,
+        Double debt
 ) {}

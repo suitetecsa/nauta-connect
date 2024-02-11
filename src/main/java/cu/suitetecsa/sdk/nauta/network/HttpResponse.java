@@ -1,17 +1,13 @@
 package cu.suitetecsa.sdk.nauta.network;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Map;
 
-/**
- * Clase que representa una respuesta HTTP.
- */
-public class HttpResponse {
-    private final int statusCode;
-    private final String statusMessage;
-    private final byte[] content;
-    private final Map<String, String> cookies;
-
+public record HttpResponse(int statusCode, String statusMessage, byte[] content, Map<String, String> cookies) {
     public HttpResponse(int statusCode, String statusMessage, byte[] content, Map<String, String> cookies) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
@@ -19,23 +15,14 @@ public class HttpResponse {
         this.cookies = cookies;
     }
 
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
-    public byte[] getContent() {
+    @Override
+    @Contract(value = " -> new", pure = true)
+    public byte @NotNull [] content() {
         return Arrays.copyOf(content, content.length);
     }
 
-    public Map<String, String> getCookies() {
-        return cookies;
-    }
-
-    public String getText() {
-        return new String(content, java.nio.charset.StandardCharsets.UTF_8);
+    @Contract(value = " -> new", pure = true)
+    public @NotNull String getText() {
+        return new String(content, StandardCharsets.UTF_8);
     }
 }

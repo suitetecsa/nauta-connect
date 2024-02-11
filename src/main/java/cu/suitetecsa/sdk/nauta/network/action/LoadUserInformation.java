@@ -9,6 +9,8 @@ import cu.suitetecsa.sdk.nauta.utils.PortalManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cu.suitetecsa.sdk.nauta.utils.PortalManager.USER;
+
 public class LoadUserInformation implements Action {
     private final String username;
     private final String password;
@@ -36,15 +38,15 @@ public class LoadUserInformation implements Action {
 
     @Override
     public Map<String, String> getData() throws NautaAttributeException {
-        if (csrfHw == null) {
-            throw new NautaAttributeException("csrfHw is required");
-        } else if (wlanUserIp == null) {
-            throw new NautaAttributeException("wlanUserIp is required");
-        } else if (username == null) {
-            throw new NautaAttributeException("username is required");
-        } else {
-            switch (portal) {
-                case CONNECT -> {
+        switch (portal) {
+            case CONNECT -> {
+                if (csrfHw == null) {
+                    throw new NautaAttributeException("csrfHw is required");
+                } else if (wlanUserIp == null) {
+                    throw new NautaAttributeException("wlanUserIp is required");
+                } else if (username == null) {
+                    throw new NautaAttributeException("username is required");
+                } else {
                     if (attributeUUID != null) {
                         return Map.of(
                                 "op", "getLeftTime",
@@ -67,11 +69,11 @@ public class LoadUserInformation implements Action {
                         }
                     }
                 }
-                case USER -> {
-                    return null;
-                }
-                default -> throw new IllegalArgumentException("Unsupported PortalManager: " + portal);
             }
+            case USER -> {
+                return null;
+            }
+            default -> throw new IllegalArgumentException("Unsupported PortalManager: " + portal);
         }
     }
 
@@ -96,17 +98,17 @@ public class LoadUserInformation implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -116,12 +118,12 @@ public class LoadUserInformation implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return null;
     }
 }

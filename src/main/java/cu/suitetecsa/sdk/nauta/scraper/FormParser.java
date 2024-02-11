@@ -1,5 +1,7 @@
 package cu.suitetecsa.sdk.nauta.scraper;
 
+import cu.suitetecsa.sdk.nauta.network.HttpResponse;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 
@@ -10,16 +12,21 @@ public interface FormParser {
     /**
      * Analiza el HTML para extraer información y datos del formulario de acción.
      *
-     * @param html El contenido HTML a analizar.
+     * @param httpResponse El contenido HTML a analizar.
      * @return Un par que contiene la URL del formulario y un mapa de datos.
      */
-    SimpleEntry<String, Map<String, String>> parseActionForm(String html);
+    SimpleEntry<String, Map<String, String>> parseActionForm(HttpResponse httpResponse);
 
     /**
      * Analiza el HTML para extraer información y datos del formulario de inicio de sesión.
      *
-     * @param html El contenido HTML a analizar.
-     * @return Un par que contiene la URL del formulario y un mapa de datos.
+     * @param httpResponse@return Un par que contiene la URL del formulario y un mapa de datos.
      */
-    SimpleEntry<String, Map<String, String>> parseLoginForm(String html);
+    SimpleEntry<String, Map<String, String>> parseLoginForm(HttpResponse httpResponse);
+
+    class Builder {
+        public FormParser build() {
+            return new FormParserImpl();
+        }
+    }
 }
