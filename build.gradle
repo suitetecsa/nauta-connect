@@ -1,11 +1,13 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'cu.suitetecsa.sdk'
 version = '1.0-SNAPSHOT'
 
 repositories {
+    maven { url "https://jitpack.io"  }
     mavenCentral()
 }
 
