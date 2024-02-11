@@ -17,6 +17,19 @@ java {
     }
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'cu.suitetecsa.sdk'
+            artifactId 'nauta-connect'
+            version '1.0.0'
+
+            from components.java
+        }
+    }
+}
+
+
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.0'
     testImplementation platform('org.junit:junit-bom:5.9.1')
