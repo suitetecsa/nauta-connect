@@ -6,8 +6,13 @@ plugins {
 group = 'cu.suitetecsa.sdk'
 version = '1.0-SNAPSHOT'
 
-sourceCompatibility = '1.17'
-targetCompatibility = '1.17'
+// Define la versión de Java a utilizar
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 
 repositories {
     maven { url "https://jitpack.io"  }
