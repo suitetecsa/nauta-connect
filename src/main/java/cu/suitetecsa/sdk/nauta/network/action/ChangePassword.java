@@ -13,12 +13,18 @@ public class ChangePassword implements Action {
     private final String oldPassword;
     private final String newPassword;
     private final boolean changeMail;
+    private final HttpMethod method;
 
-    public ChangePassword(String csrf, String oldPassword, String newPassword, boolean changeMail) {
+    public ChangePassword(String csrf, String oldPassword, String newPassword, boolean changeMail, HttpMethod method) {
         this.csrf = csrf;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
         this.changeMail = changeMail;
+        this.method = method;
+    }
+
+    public ChangePassword copyWithCsrfAndMethod(String csrf, HttpMethod method) {
+        return new ChangePassword(csrf, this.oldPassword, this.newPassword, this.changeMail, method);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class ChangePassword implements Action {
 
     @Override
     public HttpMethod getMethod() {
-        return HttpMethod.POST;
+        return this.method == null ? HttpMethod.POST : method;
     }
 
     @Override
@@ -58,17 +64,17 @@ public class ChangePassword implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -78,12 +84,12 @@ public class ChangePassword implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
-        return ActionType.Connections;
+    public ActionType type() {
+        return null;
     }
 }

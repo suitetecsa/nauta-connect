@@ -1,13 +1,12 @@
-package cu.suitetecsa.sdk.nauta.jsoupimpl;
+package cu.suitetecsa.sdk.nauta.scraper;
 
 import cu.suitetecsa.sdk.nauta.exception.NotLoggedInException;
 import cu.suitetecsa.sdk.nauta.network.HttpResponse;
-import cu.suitetecsa.sdk.nauta.scraper.ErrorParser;
 import cu.suitetecsa.sdk.nauta.utils.Constants;
 import cu.suitetecsa.sdk.nauta.utils.ExceptionHandler;
 import cu.suitetecsa.sdk.nauta.utils.PortalManager;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JsoupErrorParser implements ErrorParser {
+class ErrorParserImpl implements ErrorParser {
     private final PortalManager portalManager;
 
     private Pattern getRegex() {
@@ -27,13 +26,8 @@ public class JsoupErrorParser implements ErrorParser {
         };
     }
 
-    private JsoupErrorParser(PortalManager portalManager) {
+    ErrorParserImpl(PortalManager portalManager) {
         this.portalManager = portalManager;
-    }
-
-    @Contract(value = "_ -> new", pure = true)
-    public static @NotNull JsoupErrorParser whenPortalManager(PortalManager portalManager) {
-        return new JsoupErrorParser(portalManager);
     }
 
     private String getErrorMessage(Document html) {
@@ -56,7 +50,7 @@ public class JsoupErrorParser implements ErrorParser {
      * @param document The HTML document to parse.
      * @return The parsed error message, or null if no error message is found.
      */
-    public String parseError(@NotNull Document document) {
+    private @Nullable String parseError(@NotNull Document document) {
         Elements scripts = document.select("script[type='text/javascript']");
         Element lastScript = scripts.last();
 

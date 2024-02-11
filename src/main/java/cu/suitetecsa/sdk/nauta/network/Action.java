@@ -11,12 +11,12 @@ public interface Action {
     boolean isIgnoreContentType();
     int getTimeout();
     String getCsrfUrl();
-    int getCount();
-    String getYearMonthSelected();
-    int getPagesCount();
+    int count();
+    String yearMonthSelected();
+    int pagesCount();
     int getLarge();
-    boolean isReversed();
-    ActionType getType();
+    boolean reversed();
+    ActionType type();
 
     int TIMEOUT_MS = 30000;
 }

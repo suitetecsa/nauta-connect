@@ -4,5 +4,5 @@ public enum ActionType {
     Connections,
     Recharges,
     Transfers,
-    QuotesPaid
+    FeesPaid
 }

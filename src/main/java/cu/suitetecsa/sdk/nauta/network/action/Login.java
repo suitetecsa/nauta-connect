@@ -29,11 +29,15 @@ public class Login implements Action {
         this.method = method;
     }
 
+    public Login copyWithCsrfAndMethod(String csrf, HttpMethod method) {
+        return new Login(csrf, this.wlanUserIp, this.username, this.password, this.captchaCode, this.portal, method);
+    }
+
     @Override
     public String getUrl() {
         return switch (portal) {
             case CONNECT -> PortalManager.CONNECT.getBaseUrl() + "//LoginServlet";
-            case USER -> "/user/login/es-es";
+            case USER -> "https://www.portal.nauta.cu/user/login/es-es";
         };
     }
 
@@ -87,17 +91,17 @@ public class Login implements Action {
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -107,12 +111,12 @@ public class Login implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return null;
     }
 }

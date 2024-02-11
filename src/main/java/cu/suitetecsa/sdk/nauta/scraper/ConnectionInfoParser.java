@@ -4,6 +4,7 @@ import cu.suitetecsa.sdk.nauta.exception.InvalidSessionException;
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
 import cu.suitetecsa.sdk.nauta.model.ConnectInformation;
+import cu.suitetecsa.sdk.nauta.network.HttpResponse;
 
 /**
  * Interfaz que define un scraper para analizar contenido HTML en el portal de conexión.
@@ -22,10 +23,10 @@ public interface ConnectionInfoParser {
     /**
      * Analiza el HTML para extraer información de conexión de Nauta.
      *
-     * @param html El contenido HTML a analizar.
+     * @param httpResponse El contenido HTML a analizar.
      * @return Un objeto de tipo `ConnectInformation` que contiene la información de conexión.
      */
-    ConnectInformation parseConnectInformation(String html) throws NautaException, LoadInfoException;
+    ConnectInformation parseConnectInformation(HttpResponse httpResponse) throws NautaException, LoadInfoException;
 
     /**
      * Analiza el HTML para extraer el tiempo restante de la conexión.
@@ -38,16 +39,22 @@ public interface ConnectionInfoParser {
     /**
      * Analiza el HTML para extraer el atributo UUID.
      *
-     * @param html El contenido HTML a analizar.
+     * @param httpResponse El contenido HTML a analizar.
      * @return El valor del atributo UUID.
      */
-    String parseAttributeUUID(String html) throws LoadInfoException;
+    String parseAttributeUUID(HttpResponse httpResponse) throws LoadInfoException;
 
     /**
      * Analiza el HTML para verificar si el cierre de sesión fue exitoso.
      *
-     * @param html El contenido HTML a analizar.
+     * @param httpResponse El contenido HTML a analizar.
      * @return `true` si el cierre de sesión fue exitoso, de lo contrario, `false`.
      */
-    Boolean isSuccessLogout(String html);
+    Boolean isSuccessLogout(HttpResponse httpResponse);
+
+    class Builder {
+        public ConnectionInfoParser build() {
+            return new ConnectionInfoParserImpl();
+        }
+    }
 }

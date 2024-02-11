@@ -1,5 +1,6 @@
-package cu.suitetecsa.sdk.nauta.jsoupimpl;
+package cu.suitetecsa.sdk.nauta.network;
 
+import cu.suitetecsa.sdk.nauta.Session;
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NautaAttributeException;
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
@@ -12,10 +13,10 @@ import java.util.function.Function;
 /**
  * Clase que implementa el comunicador del portal utilizando Jsoup.
  */
-public class JsoupPortalCommunicator implements PortalCommunicator {
+class PortalCommunicatorImpl implements PortalCommunicator {
     private final Session session;
 
-    public JsoupPortalCommunicator(Session session) {
+    public PortalCommunicatorImpl(Session session) {
         this.session = session;
     }
 

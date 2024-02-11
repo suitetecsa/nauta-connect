@@ -1,4 +1,4 @@
-package cu.suitetecsa.sdk.nauta.jsoupimpl;
+package cu.suitetecsa.sdk.nauta.scraper;
 
 import cu.suitetecsa.sdk.nauta.exception.InvalidSessionException;
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * Implementación de `ConnectionInfoParser` para analizar información de conexión de Nauta.
  */
-public class JsoupConnectionInfoParser implements ConnectionInfoParser {
+class ConnectionInfoParserImpl implements ConnectionInfoParser {
     private final ExceptionHandler<LoadInfoException> loadInfoExceptionHandler = new ExceptionHandler<>(LoadInfoException::new);
 
     static String connectDomain = "secure.etecsa.net";

@@ -1,5 +1,6 @@
 package cu.suitetecsa.sdk.nauta.network;
 
+import cu.suitetecsa.sdk.nauta.Session;
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NautaAttributeException;
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
@@ -30,4 +31,18 @@ public interface PortalCommunicator {
      * @return Objeto `ResultType` que encapsula el resultado de la acción realizada y transformada.
      */
     <T> T performRequest(String url, Function<HttpResponse, T> transform) throws NautaException, LoadInfoException;
+
+    class Builder {
+        private Session session;
+
+        public Builder withSession(Session session) {
+            this.session = session;
+            return this;
+        }
+
+        public PortalCommunicator build() {
+            if (session == null) session = new Session.Builder().build();
+            return new PortalCommunicatorImpl(session);
+        }
+    }
 }

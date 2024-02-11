@@ -33,6 +33,7 @@ public class ExceptionHandler<T extends Throwable> {
      *
      */
     public static class Builder<T extends Exception> {
+        private Class<T> exceptionClass;
         private ExceptionFactory<T> excFactory = null;
 
         public Builder() {
@@ -48,6 +49,10 @@ public class ExceptionHandler<T extends Throwable> {
             this.excFactory = exceptionFactory;
             return this;
         }
+        public Builder<T> withExceptionClass(Class<T> exceptionClass) {
+            this.exceptionClass = exceptionClass;
+            return this;
+        }
 
         /**
          * Construye una instancia de `ExceptionHandler` utilizando la factoría de excepciones especificada.
@@ -58,7 +63,9 @@ public class ExceptionHandler<T extends Throwable> {
          */
         public ExceptionHandler<T> build() {
             if (excFactory == null) {
-                excFactory = new ExceptionFactoryImpl.Builder<T>().build();
+                excFactory = new ExceptionFactoryImpl.Builder<T>()
+                        .withExceptionClass(exceptionClass)
+                        .build();
             }
             return new ExceptionHandler<>(excFactory);
         }

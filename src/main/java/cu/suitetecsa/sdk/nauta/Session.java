@@ -1,7 +1,8 @@
-package cu.suitetecsa.sdk.nauta.network;
+package cu.suitetecsa.sdk.nauta;
 
 import cu.suitetecsa.sdk.nauta.exception.LoadInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NautaException;
+import cu.suitetecsa.sdk.nauta.network.HttpResponse;
 
 import java.util.Map;
 
@@ -70,4 +71,10 @@ public interface Session {
      * según corresponda.
      */
     HttpResponse post(String url, Map<String, String> data) throws NautaException, LoadInfoException;
+
+    class Builder {
+        public Session build() {
+            return new SessionImpl();
+        }
+    }
 }

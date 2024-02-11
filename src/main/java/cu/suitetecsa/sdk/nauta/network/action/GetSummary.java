@@ -22,13 +22,17 @@ public class GetSummary implements Action {
         this.method = method;
     }
 
+    public GetSummary copyWithCsrfAndMethod(String csrf, HttpMethod method) {
+        return new GetSummary(csrf, this.year, this.month, this.type, method);
+    }
+
     @Override
     public String getUrl() {
         return switch (type) {
-            case Connections -> "/useraaa/service_detail_summary/";
-            case Recharges -> "/useraaa/recharge_detail_summary/";
-            case Transfers -> "/useraaa/transfer_detail_summary/";
-            case QuotesPaid -> "/useraaa/nautahogarpaid_detail_summary/";
+            case Connections -> "https://www.portal.nauta.cu/useraaa/service_detail_summary/";
+            case Recharges -> "https://www.portal.nauta.cu/useraaa/recharge_detail_summary/";
+            case Transfers -> "https://www.portal.nauta.cu/useraaa/transfer_detail_summary/";
+            case FeesPaid -> "https://www.portal.nauta.cu/useraaa/nautahogarpaid_detail_summary/";
         };
     }
 
@@ -46,7 +50,7 @@ public class GetSummary implements Action {
             case Connections -> "service_detail";
             case Recharges -> "recharge_detail";
             case Transfers -> "transfer_detail";
-            case QuotesPaid -> "nautahogarpaid_detail";
+            case FeesPaid -> "nautahogarpaid_detail";
         };
     }
 
@@ -68,25 +72,25 @@ public class GetSummary implements Action {
     @Override
     public String getCsrfUrl() {
         return switch (type) {
-            case Connections -> "/useraaa/service_detail/";
-            case Recharges -> "/useraaa/recharge_detail/";
-            case Transfers -> "/useraaa/transfer_detail/";
-            case QuotesPaid -> "/useraaa/nautahogarpaid_detail/";
+            case Connections -> "https://www.portal.nauta.cu/useraaa/service_detail/";
+            case Recharges -> "https://www.portal.nauta.cu/useraaa/recharge_detail/";
+            case Transfers -> "https://www.portal.nauta.cu/useraaa/transfer_detail/";
+            case FeesPaid -> "https://www.portal.nauta.cu/useraaa/nautahogarpaid_detail/";
         };
     }
 
     @Override
-    public int getCount() {
+    public int count() {
         return 0;
     }
 
     @Override
-    public String getYearMonthSelected() {
+    public String yearMonthSelected() {
         return null;
     }
 
     @Override
-    public int getPagesCount() {
+    public int pagesCount() {
         return 0;
     }
 
@@ -96,12 +100,12 @@ public class GetSummary implements Action {
     }
 
     @Override
-    public boolean isReversed() {
+    public boolean reversed() {
         return false;
     }
 
     @Override
-    public ActionType getType() {
+    public ActionType type() {
         return type;
     }
 }

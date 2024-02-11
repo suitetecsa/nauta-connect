@@ -1,11 +1,10 @@
-package cu.suitetecsa.sdk.nauta.jsoupimpl;
+package cu.suitetecsa.sdk.nauta.scraper;
 
 import cu.suitetecsa.sdk.nauta.exception.InvalidSessionException;
 import cu.suitetecsa.sdk.nauta.exception.NautaGetInfoException;
 import cu.suitetecsa.sdk.nauta.exception.NotLoggedInException;
 import cu.suitetecsa.sdk.nauta.model.AccountDetail;
 import cu.suitetecsa.sdk.nauta.network.HttpResponse;
-import cu.suitetecsa.sdk.nauta.scraper.AccountParser;
 import cu.suitetecsa.sdk.nauta.utils.ExceptionHandler;
 import cu.suitetecsa.sdk.nauta.utils.PortalManager;
 import cu.suitetecsa.sdk.nauta.utils.StringUtils;
@@ -13,14 +12,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-public class JsoupAccountParser implements AccountParser {
+class AccountParserImpl implements AccountParser {
 
     @Contract("_ -> new")
     private @NotNull AccountDetail parseAccountAttributes(@NotNull Document htmlParsed) throws ParseException {
@@ -34,11 +30,11 @@ public class JsoupAccountParser implements AccountParser {
                     StringUtils.toDateMillis(attrs.get(2)),
                     attrs.get(3),
                     attrs.get(4),
-                    Double.parseDouble(attrs.get(5).replace("$", "").replace(" CUP", "").replace(",", ".")),
+                    StringUtils.fromPriceString(attrs.get(5)),
                     StringUtils.toSeconds(attrs.get(6)),
                     attrs.get(7),
                     attrs.size() > 8 ? attrs.get(8) : null,
-                    attrs.size() > 9 ? Double.parseDouble(attrs.get(9).replace("$", "").replace(" CUP", "").replace(",", ".")) : null,
+                    attrs.size() > 9 ? StringUtils.fromPriceString(attrs.get(9)) : null,
                     attrs.size() > 10 ? attrs.get(10) : null,
                     attrs.size() > 11 ? attrs.get(11) : null,
                     attrs.size() > 12 ? attrs.get(12) : null,
@@ -47,9 +43,9 @@ public class JsoupAccountParser implements AccountParser {
                     attrs.size() > 15 ? StringUtils.toDateMillis(attrs.get(15)) : null,
                     attrs.size() > 16 ? StringUtils.toDateMillis(attrs.get(16)) : null,
                     attrs.size() > 17 ? StringUtils.toDateMillis(attrs.get(17)) : null,
-                    attrs.size() > 18 ? Double.parseDouble(attrs.get(18).replace("$", "").replace(" CUP", "").replace(",", ".")) : null,
-                    attrs.size() > 19 ? Double.parseDouble(attrs.get(19).replace("$", "").replace(" CUP", "").replace(",", ".")) : null,
-                    attrs.size() > 20 ? Double.parseDouble(attrs.get(20).replace("$", "").replace(" CUP", "").replace(",", ".")) : null
+                    attrs.size() > 18 ? StringUtils.fromPriceString(attrs.get(18)) : null,
+                    attrs.size() > 19 ? StringUtils.fromPriceString(attrs.get(19)) : null,
+                    attrs.size() > 20 ? StringUtils.fromPriceString(attrs.get(20)) : null
             );
         } catch (InvalidSessionException e) {
             throw new RuntimeException(e);
@@ -64,6 +60,6 @@ public class JsoupAccountParser implements AccountParser {
 
     @Override
     public <T extends Exception> HttpResponse throwExceptionOnFailure(HttpResponse httpResponse, String message, ExceptionHandler<T> exceptionHandler) throws T, NotLoggedInException {
-        return JsoupErrorParser.whenPortalManager(PortalManager.USER).throwExceptionOnFailure(httpResponse, message, exceptionHandler);
+        return new ErrorParser.Builder().whenPortalManager(PortalManager.USER).build().throwExceptionOnFailure(httpResponse, message, exceptionHandler);
     }
 }
