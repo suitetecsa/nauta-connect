@@ -6,9 +6,6 @@ plugins {
 group = 'cu.suitetecsa.sdk'
 version = '1.0-SNAPSHOT'
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
 repositories {
     maven { url "https://jitpack.io"  }
     mavenCentral()
