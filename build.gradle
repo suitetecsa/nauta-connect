@@ -1,36 +1,35 @@
 plugins {
     id 'java'
-    id 'maven-publish'
+    id 'cl.franciscosolis.sonatype-central-upload' version '1.0.0'
 }
 
-group = 'cu.suitetecsa.sdk'
-version = '1.0-SNAPSHOT'
+group = 'io.github.suitetecsa'
+version = '0.1.1'
 
 // Define la versión de Java a utilizar
 java {
+    withJavadocJar()
+    withSourcesJar()
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
+sonatypeCentralUpload {
+    username = findProperty("sonatypeUsername") ?: System.getenv("SONATYPE_USERNAME")
+    password = findProperty("sonatypePassword") ?: System.getenv("SONATYPE_PASSWORD")
+
+    archives = files("build/libs/nauta-connect-${version}.jar", "build/libs/nauta-connect-${version}-javadoc.jar", "build/libs/nauta-connect-${version}-sources.jar")
+    pom = file("./pom.xml")
+
+    signingKey = findProperty("privateKey") ?: System.getenv("SIGNING_KEY")
+    signingKeyPassphrase = findProperty("keyPassphrase") ?: System.getenv("SIGNING_KEY_PASSPHRASE")
+}
+
 
 repositories {
-    maven { url "https://jitpack.io"  }
     mavenCentral()
 }
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'cu.suitetecsa.sdk'
-            artifactId 'nauta-connect'
-            version '1.0.0'
-
-            from components.java
-        }
-    }
-}
-
 
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.0'
