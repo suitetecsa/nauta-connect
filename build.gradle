@@ -16,14 +16,14 @@ java {
 }
 
 sonatypeCentralUpload {
-    username = findProperty("sonatypeUsername") ?: System.getenv("SONATYPE_USERNAME")
-    password = findProperty("sonatypePassword") ?: System.getenv("SONATYPE_PASSWORD")
+    username = System.getenv("SONATYPE_USERNAME")
+    password = System.getenv("SONATYPE_PASSWORD")
 
     archives = files("build/libs/nauta-connect-${version}.jar", "build/libs/nauta-connect-${version}-javadoc.jar", "build/libs/nauta-connect-${version}-sources.jar")
     pom = file("./pom.xml")
 
-    signingKey = findProperty("privateKey") ?: System.getenv("SIGNING_KEY")
-    signingKeyPassphrase = findProperty("keyPassphrase") ?: System.getenv("SIGNING_KEY_PASSPHRASE")
+    signingKey = System.getenv("SIGNING_KEY")
+    signingKeyPassphrase = System.getenv("SIGNING_KEY_PASSPHRASE")
 }
 
 
