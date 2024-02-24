@@ -73,12 +73,12 @@ class ErrorParserImpl implements ErrorParser {
     }
 
     @Override
-    public <T extends Exception> HttpResponse throwExceptionOnFailure(@NotNull HttpResponse httpResponse, String message, ExceptionHandler<T> exceptionHandler) throws T, NotLoggedInException {
+    public <T extends Exception> @NotNull HttpResponse throwExceptionOnFailure(@NotNull HttpResponse httpResponse, String message, ExceptionHandler<T> exceptionHandler) throws T, NotLoggedInException {
         String errorMessage = getErrorMessage(Jsoup.parse(httpResponse.getText()));
         if (errorMessage != null) {
             List<String> errors = parseErrors(errorMessage);
 
-            if (errors.size() == 0 && errorMessage.contains(Constants.variousErrorsDetected)) {
+            if (errors.isEmpty() && errorMessage.contains(Constants.variousErrorsDetected)) {
                 throw exceptionHandler.handleException(message, List.of(errorMessage.replace(Constants.variousErrorsDetected + " ", "")));
             } else if (errors.size() == 1 && Constants.notLoggedInErrors.contains(errors.get(0))) {
                 throw new ExceptionHandler<>(NotLoggedInException::new)

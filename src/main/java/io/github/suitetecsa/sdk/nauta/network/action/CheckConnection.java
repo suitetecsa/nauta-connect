@@ -1,7 +1,6 @@
 package io.github.suitetecsa.sdk.nauta.network.action;
 
 import io.github.suitetecsa.sdk.nauta.network.Action;
-import io.github.suitetecsa.sdk.nauta.network.ActionType;
 import io.github.suitetecsa.sdk.nauta.network.HttpMethod;
 
 import java.util.Map;
@@ -39,11 +38,6 @@ public class CheckConnection implements Action {
     }
 
     @Override
-    public String getCsrfUrl() {
-        return null;
-    }
-
-    @Override
     public int count() {
         return 0;
     }
@@ -53,24 +47,5 @@ public class CheckConnection implements Action {
         return null;
     }
 
-    @Override
-    public int pagesCount() {
-        return 0;
-    }
-
-    @Override
-    public int getLarge() {
-        return 0;
-    }
-
-    @Override
-    public boolean reversed() {
-        return false;
-    }
-
-    @Override
-    public ActionType type() {
-        return null;
-    }
 }
 

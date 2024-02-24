@@ -4,9 +4,10 @@ import io.github.suitetecsa.sdk.nauta.exception.NotLoggedInException;
 import io.github.suitetecsa.sdk.nauta.network.HttpResponse;
 import io.github.suitetecsa.sdk.nauta.utils.ExceptionHandler;
 import io.github.suitetecsa.sdk.nauta.utils.PortalManager;
+import org.jetbrains.annotations.NotNull;
 
 public interface ErrorParser {
-    <T extends Exception> HttpResponse throwExceptionOnFailure(HttpResponse httpResponse, String message, ExceptionHandler<T> exceptionHandler) throws T, NotLoggedInException;
+    <T extends Exception> @NotNull HttpResponse throwExceptionOnFailure(HttpResponse httpResponse, String message, ExceptionHandler<T> exceptionHandler) throws T, NotLoggedInException;
 
     class Builder {
         private PortalManager portalManager;

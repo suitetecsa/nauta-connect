@@ -12,7 +12,7 @@ import java.util.Map;
 
 class FormParserImpl implements FormParser {
 
-    private Document getHtml(@NotNull HttpResponse httpResponse) {
+    private @NotNull Document getHtml(@NotNull HttpResponse httpResponse) {
         return Jsoup.parse(httpResponse.getText());
     }
     @Override
@@ -34,7 +34,7 @@ class FormParserImpl implements FormParser {
         return null;
     }
 
-    HashMap<String, String> getInputs(@NotNull Element form) {
+    @NotNull HashMap<String, String> getInputs(@NotNull Element form) {
         HashMap<String, String> inputs = new HashMap<>();
         for (Element input : form.select("input[name]")) {
             inputs.put(input.attr("name"), input.attr("value"));
