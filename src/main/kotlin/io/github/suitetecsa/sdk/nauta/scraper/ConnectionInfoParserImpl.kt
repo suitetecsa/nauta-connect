@@ -15,6 +15,9 @@ import org.jsoup.nodes.Document
 import java.util.regex.Pattern
 import kotlin.math.min
 
+private const val ERROR_MESSAGE_LENGTH = 100
+private const val NOT_LAST_CONNECTION_KEYS = 4
+
 /**
  * Implementación de `ConnectionInfoParser` para analizar información de conexión de Nauta.
  */
@@ -57,7 +60,6 @@ internal class ConnectionInfoParserImpl : ConnectionInfoParser {
             val connectionValues = row.select("td")
             val connectionMap: MutableMap<String, String> = HashMap()
 
-            val NOT_LAST_CONNECTION_KEYS = 4
             for (index in NOT_LAST_CONNECTION_KEYS until keys.size) {
                 val element = connectionValues[index - NOT_LAST_CONNECTION_KEYS]
                 connectionMap[keys[index]] = element.text().trim { it <= ' ' }
@@ -155,7 +157,6 @@ internal class ConnectionInfoParserImpl : ConnectionInfoParser {
             return matcher.group(1)
         } else {
             var errorMessage = "Fail to parse attribute uuid"
-            val ERROR_MESSAGE_LENGTH = 100
             if (httpResponse.text.length > ERROR_MESSAGE_LENGTH) {
                 errorMessage += " - " + httpResponse.text.substring(0, ERROR_MESSAGE_LENGTH)
             }

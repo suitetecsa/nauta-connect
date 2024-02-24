@@ -2,8 +2,7 @@ package io.github.suitetecsa.sdk.nauta.utils
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.Calendar
-import io.github.suitetecsa.sdk.nauta.utils.LongUtils
+import java.util.*
 
 class LongUtilsTest {
 
