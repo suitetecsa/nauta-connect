@@ -1,16 +1,12 @@
 package io.github.suitetecsa.sdk.nauta.utils
 
-import org.jetbrains.annotations.Contract
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.util.regex.Pattern
 
-class HtmlErrorParser private constructor(private val portalManager: PortalManager) {
+object HtmlErrorParser {
     private val regex: Pattern
-        get() = when (portalManager) {
-            PortalManager.CONNECT -> Pattern.compile("alert\\(\"(?<reason>[^\"]*?)\"\\)")
-            PortalManager.USER -> Pattern.compile("toastr\\.error\\('(?<reason>.*)'\\)")
-        }
+        get() = Pattern.compile("alert\\(\"(?<reason>[^\"]*?)\"\\)")
 
     /**
      * Parses the error message from the given HTML document.
@@ -18,6 +14,7 @@ class HtmlErrorParser private constructor(private val portalManager: PortalManag
      * @param document The HTML document to parse.
      * @return The parsed error message, or null if no error message is found.
      */
+    @JvmStatic
     fun parseError(document: Document): String? {
         val scripts = document.select("script[type='text/javascript']")
         val lastScript = scripts.last()
@@ -38,13 +35,5 @@ class HtmlErrorParser private constructor(private val portalManager: PortalManag
         }
 
         return null
-    }
-
-    companion object {
-        @JvmStatic
-        @Contract(value = "_ -> new", pure = true)
-        fun whenPortalManager(portalManager: PortalManager): HtmlErrorParser {
-            return HtmlErrorParser(portalManager)
-        }
     }
 }

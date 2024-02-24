@@ -1,7 +1,6 @@
 package io.github.suitetecsa.sdk.nauta.utils
 
 import io.github.suitetecsa.sdk.nauta.exception.InvalidSessionException
-import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

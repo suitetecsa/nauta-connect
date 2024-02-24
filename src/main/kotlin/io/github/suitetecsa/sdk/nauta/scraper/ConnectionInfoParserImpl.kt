@@ -8,6 +8,7 @@ import io.github.suitetecsa.sdk.nauta.model.ConnectInformation
 import io.github.suitetecsa.sdk.nauta.model.LastConnection
 import io.github.suitetecsa.sdk.nauta.network.HttpResponse
 import io.github.suitetecsa.sdk.nauta.utils.*
+import io.github.suitetecsa.sdk.nauta.utils.Constants.CONNECT_DOMAIN
 import org.jetbrains.annotations.Contract
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -96,7 +97,7 @@ internal class ConnectionInfoParserImpl : ConnectionInfoParser {
      * @param response El contenido HTML a analizar.
      * @return `true` si hay conexiones disponibles, de lo contrario, `false`.
      */
-    override fun parseCheckConnection(response: HttpResponse) = !response.text.contains(connectDomain)
+    override fun parseCheckConnection(response: HttpResponse) = !response.text.contains(CONNECT_DOMAIN)
 
     /**
      * Analiza el HTML para extraer información de conexión de Nauta.
@@ -120,7 +121,6 @@ internal class ConnectionInfoParserImpl : ConnectionInfoParser {
         DocumentUtils.throwExceptionOnFailure(
             htmlParsed,
             "Fail parse nauta account information",
-            PortalManager.CONNECT,
             loadInfoExceptionHandler
         )
 
@@ -166,9 +166,5 @@ internal class ConnectionInfoParserImpl : ConnectionInfoParser {
 
     override fun isSuccessLogout(httpResponse: HttpResponse): Boolean {
         return httpResponse.text.contains("SUCCESS")
-    }
-
-    companion object {
-        var connectDomain: String = "secure.etecsa.net"
     }
 }

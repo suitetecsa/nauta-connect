@@ -37,10 +37,7 @@ internal class SessionImpl : Session {
         cookies.putAll(response.cookies())
 
         return HttpResponse(
-            response.statusCode(),
-            response.statusMessage(),
-            response.bodyAsBytes(),
-            response.cookies()
+            response.bodyAsBytes()
         )
     }
 
@@ -49,11 +46,10 @@ internal class SessionImpl : Session {
      *
      * @param url               URL a la que se realiza la solicitud.
      * @param params            Parámetros de la solicitud (opcional).
-     * @param ignoreContentType Ignorar el tipo de contenido devuelto en la respuesta (por defecto: `false`).
      * @param timeout           Tiempo límite para la solicitud (por defecto: `30000` milisegundos).
      * @return Objeto `ResultType<HttpResponse>` con los datos de la respuesta o información sobre el error, según
      * corresponda.
-    </HttpResponse> */
+     */
     @Throws(NautaException::class, LoadInfoException::class)
     override fun get(
         url: String,
@@ -72,6 +68,15 @@ internal class SessionImpl : Session {
         }
     }
 
+    /**
+     * Sends a POST request to the given URL with the provided data.
+     *
+     * @param url The URL to send the POST request to.
+     * @param data The data to include in the POST request body.
+     * @return The HTTP response.
+     * @throws NautaException If an error occurs in the Nauta SDK.
+     * @throws LoadInfoException If an error occurs loading user info.
+     */
     @Throws(NautaException::class, LoadInfoException::class)
     override fun post(url: String, data: Map<String, String>?): HttpResponse {
         return executeRequest(url, data) { connection: Connection ->

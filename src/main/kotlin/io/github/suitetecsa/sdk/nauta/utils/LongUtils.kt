@@ -8,9 +8,9 @@ private const val SECONDS_IN_MINUTE = 60
 
 object LongUtils {
     @JvmStatic
-    fun toDateString(date: Long?): String {
+    fun toDateString(date: Long): String {
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = date!!
+        calendar.timeInMillis = date
         return SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(calendar.time)
     }
 
