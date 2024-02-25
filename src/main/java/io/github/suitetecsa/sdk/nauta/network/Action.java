@@ -10,13 +10,9 @@ public interface Action {
     HttpMethod getMethod();
     boolean isIgnoreContentType();
     int getTimeout();
-    String getCsrfUrl();
+
     int count();
     String yearMonthSelected();
-    int pagesCount();
-    int getLarge();
-    boolean reversed();
-    ActionType type();
 
     int TIMEOUT_MS = 30000;
 }
