@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.suitetecsa.sdk"
-version = "0.1.3"
+version = "0.1.4-alpha01"
 
 repositories {
     mavenCentral()
@@ -17,8 +17,12 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    // Adaptador de Coroutines para Retrofit
+    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+    // Adaptador RxJava para Retrofit
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
     implementation("com.auth0:java-jwt:3.18.2")
 

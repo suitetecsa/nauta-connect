@@ -5,21 +5,17 @@ import io.github.suitetecsa.sdk.nauta.model.login.LoginRequest
 import io.github.suitetecsa.sdk.nauta.model.login.LoginResponse
 import io.github.suitetecsa.sdk.nauta.model.users.UsersRequest
 import io.github.suitetecsa.sdk.nauta.model.users.UsersResponse
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import io.reactivex.rxjava3.core.Single
+import retrofit2.http.*
 
-interface PortalAuthService {
+interface RxPortalAuthService {
     @Headers("User-Agent: SuitETECSA/1.0.0", "Content-Type: application/json")
     @GET("/captcha/captcha?")
-    suspend fun getCaptcha(): CaptchaResponse
+    fun getCaptcha(): Single<CaptchaResponse>
 
     @Headers("User-Agent: SuitETECSA/1.0.0", "Content-Type: application/json")
     @POST("/login")
-    suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
+    fun login(@Body loginRequest: LoginRequest): Single<LoginResponse>
 
 
     @Headers(
@@ -28,9 +24,9 @@ interface PortalAuthService {
         "usernameApp: portal",
     )
     @POST("/users")
-    suspend fun users(
+    fun users(
         @Header("Authorization") authorization: String,
         @Header("passwordApp") passwordApp: String,
         @Body userRequest: UsersRequest
-    ): UsersResponse
+    ): Single<UsersResponse>
 }
