@@ -44,7 +44,11 @@ sonatypeCentralUpload {
     username = System.getenv("SONATYPE_USERNAME")
     password = System.getenv("SONATYPE_PASSWORD")
 
-    archives = files("build/libs/nauta-connect-${version}.jar", "build/libs/nauta-connect-${version}-javadoc.jar", "build/libs/nauta-connect-${version}-sources.jar")
+    archives = files(
+        "build/libs/nauta-connect-${version}.jar",
+        "build/libs/nauta-connect-${version}-javadoc.jar",
+        "build/libs/nauta-connect-${version}-sources.jar"
+    )
     pom = file("./pom_gradle.txt")
 
     signingKey = System.getenv("SIGNING_KEY")
