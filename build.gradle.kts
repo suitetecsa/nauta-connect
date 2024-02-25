@@ -1,4 +1,5 @@
 import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -8,7 +9,7 @@ plugins {
 }
 
 group = "io.github.suitetecsa.sdk"
-version = "0.1.4-alpha01"
+version = "0.1.4-alpha02"
 
 repositories {
     mavenCentral()
@@ -36,8 +37,14 @@ tasks.test {
     useJUnitPlatform()
 }
 java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
     withSourcesJar()
     withJavadocJar()
+}
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"
 }
 kotlin {
     jvmToolchain(17)
@@ -46,6 +53,7 @@ kotlin {
 publishing {
     publications {
         register<MavenPublication>("maven") {
+            from(components["java"])
             pom {
                 name.set(project.name)
                 description.set("A tool designed to interact with ETECSA services.")
