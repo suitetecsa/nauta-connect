@@ -50,3 +50,7 @@ sonatypeCentralUpload {
     signingKey = System.getenv("SIGNING_KEY")
     signingKeyPassphrase = System.getenv("SIGNING_KEY_PASSPHRASE")
 }
+
+tasks.sonatypeCentralUpload {
+    dependsOn("build")
+}
