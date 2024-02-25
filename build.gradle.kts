@@ -1,6 +1,9 @@
+import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
+
 plugins {
     kotlin("jvm") version "1.9.22"
-    id("cl.franciscosolis.sonatype-central-upload") version "1.0.0"
+    `maven-publish`
+    id("cl.franciscosolis.sonatype-central-upload") version "1.0.2"
     id("com.google.devtools.ksp").version("1.9.22-1.0.17")
 }
 
@@ -40,21 +43,52 @@ kotlin {
     jvmToolchain(17)
 }
 
-sonatypeCentralUpload {
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            pom {
+                name.set(project.name)
+                description.set("A tool designed to interact with ETECSA services.")
+                url.set("http://github.com/suitetecsa/nauta-connect")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("http://github.com/suitetecsa/nauta-connect/blob/master/LICENSE")
+                        distribution.set("repo")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("lesclaz")
+                        name.set("Lesly Cintra")
+                        email.set("lesclaz95@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("http://github.com/suitetecsa/nauta-connect/tree/master")
+                    connection.set("scm:git:git://github.com/suitetecsa/nauta-connect.git")
+                    developerConnection.set("scm:git:ssh://github.com/suitetecsa/nauta-connect.git")
+                }
+            }
+        }
+    }
+}
+
+tasks.named<SonatypeCentralUploadTask>("sonatypeCentralUpload") {
+    dependsOn("jar", "sourcesJar", "javadocJar", "generatePomFileForMavenPublication")
+
     username = System.getenv("SONATYPE_USERNAME")
     password = System.getenv("SONATYPE_PASSWORD")
 
     archives = files(
-        "build/libs/nauta-connect-${version}.jar",
-        "build/libs/nauta-connect-${version}-javadoc.jar",
-        "build/libs/nauta-connect-${version}-sources.jar"
+        tasks.named("jar"),
+        tasks.named("sourcesJar"),
+        tasks.named("javadocJar"),
     )
-    pom = file("./pom_gradle.txt")
+    pom = file(
+        tasks.named("generatePomFileForMavenPublication").get().outputs.files.single()
+    )
 
     signingKey = System.getenv("SIGNING_KEY")
     signingKeyPassphrase = System.getenv("SIGNING_KEY_PASSPHRASE")
-}
-
-tasks.sonatypeCentralUpload {
-    dependsOn("build")
 }
