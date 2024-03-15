@@ -30,7 +30,7 @@ dependencies {
 
     implementation("com.auth0:java-jwt:3.18.2")
 
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
 }
 
 tasks.test {
