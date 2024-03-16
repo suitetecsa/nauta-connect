@@ -28,7 +28,7 @@ dependencies {
     // Adaptador RxJava para Retrofit
     implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
-    implementation("com.auth0:java-jwt:3.18.2")
+    implementation("com.auth0:java-jwt:4.4.0")
 
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
 }
