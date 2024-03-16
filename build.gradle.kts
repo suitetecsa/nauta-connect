@@ -2,7 +2,7 @@ import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version "1.9.23"
     `maven-publish`
     id("cl.franciscosolis.sonatype-central-upload") version "1.0.2"
     id("com.google.devtools.ksp").version("1.9.22-1.0.17")
