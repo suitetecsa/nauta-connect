@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.mockito:mockito-core:5.11.0")
     testImplementation("junit:junit:4.13.2")
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
