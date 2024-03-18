@@ -21,7 +21,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.10.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
     // Adaptador de Coroutines para Retrofit
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
