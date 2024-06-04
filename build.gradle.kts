@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     `maven-publish`
     id("cl.franciscosolis.sonatype-central-upload") version "1.0.3"
-    id("com.google.devtools.ksp").version("1.9.23-1.0.19")
+    id("com.google.devtools.ksp").version("1.9.24-1.0.20")
 }
 
 group = "io.github.suitetecsa.sdk"
