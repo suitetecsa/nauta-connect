@@ -26,7 +26,7 @@ dependencies {
     // Adaptador de Coroutines para Retrofit
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     // Adaptador RxJava para Retrofit
-    implementation("com.squareup.retrofit2:adapter-rxjava3:2.10.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.11.0")
 
     implementation("com.auth0:java-jwt:4.4.0")
 
